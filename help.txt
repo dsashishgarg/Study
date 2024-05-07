@@ -1,27 +1,9 @@
-import psycopg2
+Hi Mallya,
 
-def count_partitions(table_name):
-    conn = psycopg2.connect(
-        dbname="your_database_name",
-        user="your_username",
-        password="your_password",
-        host="your_host",
-        port="your_port"
-    )
+Please find the folder link for sample data. I have added data for:
+1) fc_exec_summ_part_Ivl_tableau, which supports forecasting executive summary and part-level detail data.
+2) inv_exec_summ_tableau, which supports the Inventory Executive Summary Tableau dashboard.
+3) inv_plan_exception_tableau table.
+4) inv_validation_tableau table, which supports Target Validation Dashboard.
 
-    cur = conn.cursor()
-    query = f"""
-        SELECT count(*) 
-        FROM pg_partitions 
-        WHERE schemaname = 'public' AND tablename = '{table_name}';
-    """
-    cur.execute(query)
-    num_partitions = cur.fetchone()[0]
-    cur.close()
-    conn.close()
-
-    return num_partitions
-
-table_name = "your_table_name"
-num_partitions = count_partitions(table_name)
-print(f"The table '{table_name}' has {num_partitions} partition(s).")
+Additionally, there are two more tables: inv_part_Ivl_tableau and fc_model_comparison_tableau. We are currently experiencing delays in downloading from S3. Once the files are downloaded locally, we will add them to the same team folder.
