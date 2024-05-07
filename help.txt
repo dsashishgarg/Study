@@ -1,0 +1,27 @@
+import psycopg2
+
+def count_partitions(table_name):
+    conn = psycopg2.connect(
+        dbname="your_database_name",
+        user="your_username",
+        password="your_password",
+        host="your_host",
+        port="your_port"
+    )
+
+    cur = conn.cursor()
+    query = f"""
+        SELECT count(*) 
+        FROM pg_partitions 
+        WHERE schemaname = 'public' AND tablename = '{table_name}';
+    """
+    cur.execute(query)
+    num_partitions = cur.fetchone()[0]
+    cur.close()
+    conn.close()
+
+    return num_partitions
+
+table_name = "your_table_name"
+num_partitions = count_partitions(table_name)
+print(f"The table '{table_name}' has {num_partitions} partition(s).")
